@@ -340,6 +340,95 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
 }
 .btn-reviews:hover { background: rgba(191,200,230,0.12); border-color: var(--primary); }
 
+
+/* ── SLIDESHOW ── */
+.slideshow-section {
+  background: var(--bg);
+  padding: 90px 60px;
+}
+.slideshow-section .section-eyebrow { justify-content: flex-start; }
+.slideshow-section .section-title { margin-bottom: 40px; }
+
+.slideshow-wrap {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.slideshow {
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 16px 60px rgba(45,45,45,0.12);
+}
+.slides-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.slide {
+  min-width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(250,250,248,0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(191,200,230,0.3);
+  color: var(--text);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  z-index: 10;
+  line-height: 1;
+}
+.slide-btn:hover {
+  background: var(--white);
+  box-shadow: 0 4px 16px rgba(45,45,45,0.15);
+  transform: translateY(-50%) scale(1.05);
+}
+.slide-prev { left: -24px; }
+.slide-next { right: -24px; }
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.slide-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--glass-border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  padding: 0;
+}
+.slide-dot.active {
+  background: var(--primary);
+  width: 24px;
+  border-radius: 4px;
+}
+@media (max-width: 900px) {
+  .slideshow-section { padding: 60px 20px; }
+  .slide-prev { left: 8px; }
+  .slide-next { right: 8px; }
+  .slide-btn { width: 38px; height: 38px; font-size: 20px; }
+}
+
 /* ── LIGHTBOX ── */
 .lightbox { display: none; position: fixed; inset: 0; background: rgba(45,45,45,0.88); z-index: 500; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
 .lightbox.open { display: flex; }
@@ -643,14 +732,36 @@ footer ul a:hover { color: rgba(191,200,230,0.9); }
 </section>
 
 <!-- PROCESS -->
-<section class="process" id="process">
-  <p class="section-eyebrow">პროცესი</p>
-  <h2 class="section-title" style="color:var(--white)">როგორ იქმნება<br><em style="color:rgba(191,200,230,0.8)">ხელნაკეთი</em></h2>
-  <div class="steps">
-    <div class="step fade-in"><span class="step-num">01</span><h3 class="step-title">ინსპირაცია</h3><p>ყოველი ნამუშევარი იწყება იდეით — ბუნებიდან, ფერებიდან, ან კლიენტის სურვილიდან.</p></div>
-    <div class="step fade-in" style="transition-delay:0.1s"><span class="step-num">02</span><h3 class="step-title">მასალა</h3><p>ვარჩევთ საუკეთესო თვლებს, მძივებს და ქსოვილებს — თითოეული ნამუშევარისთვის სპეციალურად.</p></div>
-    <div class="step fade-in" style="transition-delay:0.2s"><span class="step-num">03</span><h3 class="step-title">ქმნადობა</h3><p>ხელები ქმნიან — ყოველი ნაკერი, ყოველი მძივი — სიზუსტით და სიყვარულით.</p></div>
-    <div class="step fade-in" style="transition-delay:0.3s"><span class="step-num">04</span><h3 class="step-title">სრულყოფა</h3><p>სანამ თქვენ მიიღებთ ნამუშევარს, ის გადის სრულ შემოწმებას — სრულყოფილებამდე.</p></div>
+<section class="slideshow-section" id="process">
+  <p class="section-eyebrow">მომხმარებლების კმაყოფილება</p>
+  <h2 class="section-title">ჩვენი <em>მომხმარებლები</em></h2>
+  <div class="slideshow-wrap">
+    <div class="slideshow" id="mainSlideshow">
+      <div class="slides-track" id="slidesTrack">
+        <div class="slide"><img src="customers/c01.jpg" alt="მომხმარებელი 1" loading="lazy"></div>
+        <div class="slide"><img src="customers/c02.jpg" alt="მომხმარებელი 2" loading="lazy"></div>
+        <div class="slide"><img src="customers/c03.jpg" alt="მომხმარებელი 3" loading="lazy"></div>
+        <div class="slide"><img src="customers/c04.jpg" alt="მომხმარებელი 4" loading="lazy"></div>
+        <div class="slide"><img src="customers/c05.jpg" alt="მომხმარებელი 5" loading="lazy"></div>
+        <div class="slide"><img src="customers/c06.jpg" alt="მომხმარებელი 6" loading="lazy"></div>
+        <div class="slide"><img src="customers/c07.jpg" alt="მომხმარებელი 7" loading="lazy"></div>
+        <div class="slide"><img src="customers/c08.jpg" alt="მომხმარებელი 8" loading="lazy"></div>
+        <div class="slide"><img src="customers/c09.jpg" alt="მომხმარებელი 9" loading="lazy"></div>
+        <div class="slide"><img src="customers/c10.jpg" alt="მომხმარებელი 10" loading="lazy"></div>
+        <div class="slide"><img src="customers/c11.jpg" alt="მომხმარებელი 11" loading="lazy"></div>
+        <div class="slide"><img src="customers/c12.jpg" alt="მომხმარებელი 12" loading="lazy"></div>
+        <div class="slide"><img src="customers/c13.jpg" alt="მომხმარებელი 13" loading="lazy"></div>
+        <div class="slide"><img src="customers/c14.jpg" alt="მომხმარებელი 14" loading="lazy"></div>
+        <div class="slide"><img src="customers/c15.jpg" alt="მომხმარებელი 15" loading="lazy"></div>
+        <div class="slide"><img src="customers/c16.jpg" alt="მომხმარებელი 16" loading="lazy"></div>
+        <div class="slide"><img src="customers/c17.jpg" alt="მომხმარებელი 17" loading="lazy"></div>
+        <div class="slide"><img src="customers/c18.jpg" alt="მომხმარებელი 18" loading="lazy"></div>
+        <div class="slide"><img src="customers/c19.jpg" alt="მომხმარებელი 19" loading="lazy"></div>
+      </div>
+    </div>
+    <button class="slide-btn slide-prev" onclick="slideMove(-1)" aria-label="წინა">&#8249;</button>
+    <button class="slide-btn slide-next" onclick="slideMove(1)" aria-label="შემდეგი">&#8250;</button>
+    <div class="slide-dots" id="slideDots"></div>
   </div>
 </section>
 
@@ -948,6 +1059,72 @@ const observer=new IntersectionObserver((entries)=>{
   entries.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});
 },{threshold:0.12});
 document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// ── SLIDESHOW ──
+(function() {
+  const TOTAL = 19;
+  const INTERVAL = 5000;
+  let current = 0;
+  let timer;
+
+  function init() {
+    const track = document.getElementById('slidesTrack');
+    const dotsEl = document.getElementById('slideDots');
+    if (!track || !dotsEl) return;
+
+    // Create dots
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('button');
+      d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'სლაიდი ' + (i+1));
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    }
+
+    startAuto();
+  }
+
+  function goTo(n) {
+    current = (n + TOTAL) % TOTAL;
+    document.getElementById('slidesTrack').style.transform = 'translateX(-' + (current * 100) + '%)';
+    document.querySelectorAll('.slide-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), INTERVAL);
+  }
+
+  window.slideMove = function(dir) {
+    goTo(current + dir);
+    startAuto();
+  };
+
+  // Pause on hover
+  const wrap = document.querySelector('.slideshow-wrap');
+  if (wrap) {
+    wrap.addEventListener('mouseenter', () => clearInterval(timer));
+    wrap.addEventListener('mouseleave', startAuto);
+  }
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  const sl = document.querySelector('.slideshow');
+  if (sl) {
+    sl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+    sl.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 40) { slideMove(diff > 0 ? 1 : -1); }
+    }, {passive:true});
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
 </script>
 </body>
 </html><div class="cat-cards" id="catCards">
