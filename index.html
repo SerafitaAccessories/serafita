@@ -1178,11 +1178,12 @@ document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
 
 
 // ── COURSES ──
+const COURSE_DESC = 'კურსი ტარდება ვიდეოგაკვეთილების სახით. ვიდეოგაკვეთილები განთავსებულია ტელეგრამ არხზე და მისი ნახვა ნებისმიერ დროს შეგეძლებათ, კითხვების შემთხვევაში აუცილებლად გეხმარებით პრობლემის მოგვარებაში, დამატებითი ვიდეო ინსტრუქციით ან ზარით.';
 const courseData = {
-  1: { title: 'კურსი 1', price: '45 ₾', img: 'courses/course1.jpg', desc:  + COURSE_DESC +  },
-  2: { title: 'კურსი 2', price: '45 ₾', img: 'courses/course2.jpg', desc:  + COURSE_DESC +  },
-  3: { title: 'კურსი 3', price: '45 ₾', img: 'courses/course3.jpg', desc:  + COURSE_DESC +  },
-  4: { title: 'კურსი 4', price: '45 ₾', img: 'courses/course4.jpg', desc:  + COURSE_DESC +  },
+  1: { title: 'კურსი 1', price: '45 ₾', img: 'courses/course1.jpg', desc: COURSE_DESC },
+  2: { title: 'კურსი 2', price: '45 ₾', img: 'courses/course2.jpg', desc: COURSE_DESC },
+  3: { title: 'კურსი 3', price: '45 ₾', img: 'courses/course3.jpg', desc: COURSE_DESC },
+  4: { title: 'კურსი 4', price: '45 ₾', img: 'courses/course4.jpg', desc: COURSE_DESC },
   5: { title: 'მოსწავლეების ნამუშევრები', price: '', img: '', desc: 'ფოტოები მალე დაემატება.' },
 };
 function openCourse(n) {
