@@ -300,45 +300,52 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
 .cat-panel.active { display: block; }
 
 /* ── PHOTO GRID ── */
-.photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .photo-card {
-  display: grid; grid-template-columns: 1fr 1fr;
   background: var(--white); border: 1px solid var(--glass-border);
   border-radius: var(--radius-card); overflow: hidden;
-  transition: all 0.4s ease; box-shadow: var(--shadow-card);
+  transition: all 0.4s ease; box-shadow: var(--shadow-card); cursor: pointer;
 }
 .photo-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(191,200,230,0.2); border-color: var(--primary); }
-.photo-card-img { position: relative; overflow: hidden; cursor: pointer; }
-.photo-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; min-height: 220px; }
-.photo-card-img:hover img { transform: scale(1.05); }
+.photo-card-img { position: relative; overflow: hidden; aspect-ratio: 1/1; }
+.photo-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.photo-card:hover .photo-card-img img { transform: scale(1.05); }
 .photo-overlay { position: absolute; inset: 0; background: rgba(45,45,45,0); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
-.photo-card-img:hover .photo-overlay { background: rgba(45,45,45,0.25); }
+.photo-card:hover .photo-overlay { background: rgba(45,45,45,0.25); }
 .photo-overlay-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(250,250,248,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.7); transition: all 0.3s; }
-.photo-card-img:hover .photo-overlay-icon { opacity: 1; transform: scale(1); }
+.photo-card:hover .photo-overlay-icon { opacity: 1; transform: scale(1); }
 .photo-overlay-icon svg { width: 18px; height: 18px; stroke: var(--text); fill: none; stroke-width: 1.5; }
-.photo-card-info { padding: 28px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
-.photo-card-price { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 300; color: var(--text); }
-.photo-card-desc-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; }
-.photo-card-desc { font-size: 13px; font-weight: 300; color: var(--text-light); line-height: 1.8; }
-.btn-order {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 12px 20px; background: var(--text); color: var(--white);
-  font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer;
-  border-radius: var(--radius-btn); margin-top: auto;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 14px rgba(45,45,45,0.15);
-}
-.btn-order:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 24px rgba(45,45,45,0.22); }
-.btn-reviews {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 9px 16px; background: transparent; color: var(--primary-hover);
-  font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 400;
-  letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(191,200,230,0.5);
-  cursor: pointer; border-radius: var(--radius-btn); margin-top: 6px;
-  transition: all 0.3s ease; backdrop-filter: blur(6px);
-}
-.btn-reviews:hover { background: rgba(191,200,230,0.12); border-color: var(--primary); }
+.photo-card-info { padding: 16px 18px; text-align: center; }
+.photo-card-price { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--text); }
+
+/* ── PRODUCT DETAIL MODAL ── */
+.prod-modal-bg { display: none; position: fixed; inset: 0; background: rgba(45,45,45,0.6); z-index: 700; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+.prod-modal-bg.open { display: flex; }
+.prod-modal { background: rgba(250,250,248,0.97); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); max-width: 600px; width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 32px 80px rgba(45,45,45,0.2); animation: modalIn 0.35s cubic-bezier(0.34,1.3,0.64,1); position: relative; max-height: 90vh; overflow-y: auto; }
+.prod-modal-close { position: absolute; top: 16px; right: 20px; background: rgba(250,250,248,0.8); backdrop-filter: blur(8px); border: none; font-size: 24px; cursor: pointer; color: var(--text-light); z-index: 2; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.prod-modal-close:hover { color: var(--text); background: var(--white); }
+.prod-slideshow { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: var(--bg2); }
+.prod-slideshow img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s ease; background: var(--bg2); }
+.prod-slideshow img.active { opacity: 1; }
+.prod-slide-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(250,250,248,0.85); backdrop-filter: blur(8px); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; transition: all 0.25s; z-index: 2; }
+.prod-slide-nav:hover { background: var(--white); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.prod-slide-prev { left: 12px; }
+.prod-slide-next { right: 12px; }
+.prod-slide-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 2; }
+.prod-slide-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(250,250,248,0.5); border: none; cursor: pointer; transition: all 0.25s; }
+.prod-slide-dot.active { background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.3); transform: scale(1.2); }
+.prod-modal-body { padding: 24px 28px 28px; text-align: center; }
+.prod-modal-price { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--text); margin-bottom: 8px; }
+.prod-modal-contact-text { font-size: 14px; font-weight: 300; color: var(--text-light); margin-bottom: 20px; }
+.prod-contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.prod-contact-btn { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-btn); font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--glass-border); transition: all 0.3s; text-decoration: none; }
+.prod-contact-btn.whatsapp { background: #25D366; color: white; border-color: #25D366; }
+.prod-contact-btn.whatsapp:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
+.prod-contact-btn.messenger { background: #0084FF; color: white; border-color: #0084FF; }
+.prod-contact-btn.messenger:hover { background: #006acc; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,132,255,0.3); }
+.prod-contact-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; border-color: transparent; }
+.prod-contact-btn.instagram:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(220,39,67,0.3); }
+.prod-contact-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
 
 
@@ -382,9 +389,13 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
 @media(max-width:900px) {
   .courses-section { padding: 60px 20px; }
   .courses-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .prod-modal { max-width: 95vw; }
 }
 @media(max-width:480px) {
   .courses-grid { grid-template-columns: 1fr; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .prod-contact-btns { flex-direction: column; }
 }
 
 /* ── SLIDESHOW ── */
@@ -1004,6 +1015,32 @@ footer ul a:hover { color: rgba(191,200,230,0.9); }
   </div>
 </div>
 
+<!-- PRODUCT DETAIL MODAL -->
+<div class="prod-modal-bg" id="prodModal" onclick="if(event.target===this)closeProdModal()">
+  <div class="prod-modal">
+    <button class="prod-modal-close" onclick="closeProdModal()">×</button>
+    <div class="prod-slideshow" id="prodSlideshow"></div>
+    <div class="prod-modal-body">
+      <div class="prod-modal-price" id="prodPrice"></div>
+      <div class="prod-modal-contact-text">შესაკვეთად დაგვიკავშირდით</div>
+      <div class="prod-contact-btns">
+        <a href="https://wa.me/995579291020" target="_blank" class="prod-contact-btn whatsapp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://m.me/serafiraaccessories" target="_blank" class="prod-contact-btn messenger">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.975 12-11.111C24 4.974 18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8.2l3.131 3.259L19.752 8.2l-6.561 6.763z"/></svg>
+          Messenger
+        </a>
+        <a href="https://www.instagram.com/serafita_accessories/" target="_blank" class="prod-contact-btn instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ── SUPABASE ──
 const SUPA_URL = 'https://ojwxszrmngkgndgspmfu.supabase.co';
@@ -1020,20 +1057,88 @@ const SVG_ICON = '<svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 
 let photosMap = {};
 let catNamesMap = {};
 
+// ── PRODUCT DATA (hardcoded products with multiple photos) ──
+const productData = {
+  bags: [
+    { id:'bag1', cover:'bag1_cover.jpg', price:135, photos:['bag1_cover.jpg','bag1_1.jpg','bag1_2.jpg','bag1_3.jpg','bag1_4.jpg','bag1_5.jpg','bag1_6.jpg','bag1_7.jpg'] }
+  ]
+};
+
 function makeCard(prod, i) {
-  const key = prod.cat + '_' + i;
-  return '<div class="photo-card">'
-    + '<div class="photo-card-img" onclick="openLightbox(\'' + prod.cat + '\',' + i + ')">'
-    + '<img src="' + prod.img + '" alt="' + (prod.name||prod.cat) + '" loading="lazy">'
+  return '<div class="photo-card" onclick="openProdModal(\'' + prod.cat + '\',' + i + ')">'
+    + '<div class="photo-card-img">'
+    + '<img src="' + prod.cover + '" alt="' + (prod.name||'') + '" loading="lazy">'
     + '<div class="photo-overlay"><div class="photo-overlay-icon">' + SVG_ICON + '</div></div>'
     + '</div>'
     + '<div class="photo-card-info">'
     + '<div class="photo-card-price">' + prod.price + ' ₾</div>'
-    + '<div><div class="photo-card-desc-label">აღწერა</div><p class="photo-card-desc">' + (prod.description||'') + '</p></div>'
-    + '<button class="btn-order" onclick="openOrder()">შეკვეთა</button>'
-    + '<button class="btn-reviews" onclick="openReviews(\'' + key + '\',\'' + (prod.name||prod.cat) + '\')">✦ რეალური ფოტოებები და შეფასებები</button>'
     + '</div></div>';
 }
+
+// ── PRODUCT DETAIL MODAL ──
+let prodSlideIdx = 0;
+let prodSlideTimer = null;
+let currentProdPhotos = [];
+
+function openProdModal(cat, idx) {
+  const catProds = allProducts[cat];
+  if (!catProds || !catProds[idx]) return;
+  const prod = catProds[idx];
+  currentProdPhotos = prod.photos || [prod.cover];
+  prodSlideIdx = 0;
+
+  document.getElementById('prodPrice').textContent = prod.price + ' ₾';
+
+  const ss = document.getElementById('prodSlideshow');
+  ss.innerHTML = currentProdPhotos.map(function(p, i) {
+    return '<img src="' + p + '" alt="" class="' + (i===0?'active':'') + '">';
+  }).join('')
+  + '<button class="prod-slide-nav prod-slide-prev" onclick="prodSlide(-1)">‹</button>'
+  + '<button class="prod-slide-nav prod-slide-next" onclick="prodSlide(1)">›</button>'
+  + '<div class="prod-slide-dots">' + currentProdPhotos.map(function(p,i){
+    return '<button class="prod-slide-dot ' + (i===0?'active':'') + '" onclick="prodSlideTo('+i+')"></button>';
+  }).join('') + '</div>';
+
+  document.getElementById('prodModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  startProdSlideTimer();
+}
+
+function closeProdModal() {
+  document.getElementById('prodModal').classList.remove('open');
+  document.body.style.overflow = '';
+  clearInterval(prodSlideTimer);
+}
+
+function prodSlideTo(idx) {
+  const imgs = document.querySelectorAll('#prodSlideshow img');
+  const dots = document.querySelectorAll('.prod-slide-dot');
+  imgs.forEach(function(img){img.classList.remove('active');});
+  dots.forEach(function(d){d.classList.remove('active');});
+  prodSlideIdx = idx;
+  if (imgs[idx]) imgs[idx].classList.add('active');
+  if (dots[idx]) dots[idx].classList.add('active');
+  resetProdSlideTimer();
+}
+
+function prodSlide(dir) {
+  let next = prodSlideIdx + dir;
+  if (next >= currentProdPhotos.length) next = 0;
+  if (next < 0) next = currentProdPhotos.length - 1;
+  prodSlideTo(next);
+}
+
+function startProdSlideTimer() {
+  clearInterval(prodSlideTimer);
+  prodSlideTimer = setInterval(function(){ prodSlide(1); }, 5000);
+}
+function resetProdSlideTimer() {
+  clearInterval(prodSlideTimer);
+  startProdSlideTimer();
+}
+
+// ── GALLERY ──
+let allProducts = {};
 
 async function loadSite() {
   try {
@@ -1046,12 +1151,15 @@ async function loadSite() {
     });
 
     document.getElementById('catCards').innerHTML = cats.map(function(c) {
-      const count = prods.filter(function(p){return p.cat===c.id;}).length;
+      const hardcoded = productData[c.id] || [];
+      const fromDb = prods.filter(function(p){return p.cat===c.id;});
+      const count = hardcoded.length + fromDb.length;
+      const coverImg = hardcoded.length > 0 ? hardcoded[0].cover : (c.img || '');
       return '<div class="cat-card" onclick="openCategory(\'' + c.id + '\')">'
-        + '<div class="cat-card-img"><img src="' + c.img + '" alt="' + c.name + '"></div>'
+        + '<div class="cat-card-img">' + (coverImg ? '<img src="' + coverImg + '" alt="' + c.name + '">' : '') + '</div>'
         + '<div class="cat-card-body">'
         + '<div><div class="cat-card-name">' + c.name + '</div>'
-        + '<div class="cat-card-count">' + count + ' ნამუშევრარი</div></div>'
+        + '<div class="cat-card-count">' + count + ' ნამუშევარი</div></div>'
         + '<div class="cat-arrow">→</div>'
         + '</div></div>';
     }).join('');
@@ -1060,11 +1168,19 @@ async function loadSite() {
     pv.querySelectorAll('.cat-panel').forEach(function(p){p.remove();});
 
     cats.forEach(function(c) {
-      const cp = prods.filter(function(p){return p.cat===c.id;});
+      const hardcoded = (productData[c.id] || []).map(function(h){
+        return { cat: c.id, cover: h.cover, price: h.price, photos: h.photos, name: h.id };
+      });
+      const fromDb = prods.filter(function(p){return p.cat===c.id;}).map(function(p){
+        return { cat: c.id, cover: p.img, price: p.price, photos: [p.img], name: p.name, description: p.description };
+      });
+      const all = hardcoded.concat(fromDb);
+      allProducts[c.id] = all;
+
       const panel = document.createElement('div');
       panel.className = 'cat-panel';
       panel.id = 'panel-' + c.id;
-      panel.innerHTML = '<div class="photo-grid">' + cp.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
+      panel.innerHTML = '<div class="photo-grid">' + all.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
       pv.appendChild(panel);
     });
   } catch(e) {
