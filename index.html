@@ -301,6 +301,7 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
 
 /* ── PHOTO GRID ── */
 .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.photo-grid.grid-4 { grid-template-columns: repeat(4, 1fr); }
 .photo-card {
   background: var(--white); border: 1px solid var(--glass-border);
   border-radius: var(--radius-card); overflow: hidden;
@@ -394,6 +395,7 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
   .courses-section { padding: 60px 20px; }
   .courses-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .photo-grid.grid-4 { grid-template-columns: repeat(2, 1fr); }
   .products-grid { grid-template-columns: 1fr; gap: 16px; }
   .prod-modal { max-width: 95vw; }
 }
@@ -1075,6 +1077,16 @@ const productData = {
   kids_bags: [
     { id:'kidsbag1', cover:'kidsbag1_cover.jpg', price:100, photos:['kidsbag1_1.jpg','kidsbag1_2.jpg'] },
     { id:'kidsbag2', cover:'kidsbag2_cover.jpg', price:100, photos:['kidsbag2_1.jpg','kidsbag2_2.jpg'] }
+  ],
+  car_bags: [
+    { id:'car1', cover:'car1.jpg', price:100 },
+    { id:'car2', cover:'car2.jpg', price:100 },
+    { id:'car3', cover:'car3.jpg', price:100 },
+    { id:'car4', cover:'car4.jpg', price:100 },
+    { id:'car5', cover:'car5.jpg', price:100 },
+    { id:'car6', cover:'car6.jpg', price:100 },
+    { id:'car7', cover:'car7.jpg', price:100 },
+    { id:'car8', cover:'car_cover.jpg', price:100 }
   ]
 };
 
@@ -1163,7 +1175,7 @@ let allProducts = {};
 const categories = [
   { id: 'bags', name: 'ჩანთები', cover: 'bag1_cover.jpg' },
   { id: 'kids_bags', name: 'საბავშვო ჩანთები', cover: 'kidsbag2_cover.jpg' },
-  { id: 'car_bags', name: 'მანქანის ჩანთები', cover: '' },
+  { id: 'car_bags', name: 'მანქანის ჩანთები', cover: 'car_cover.jpg' },
   { id: 'keychains', name: 'ბრელოკები', cover: '' },
   { id: 'sets', name: 'ნაკრები', cover: '' },
   { id: 'wedding_bouquets', name: 'საქორწილო თაიგულები', cover: '' },
@@ -1205,7 +1217,11 @@ function loadSite() {
           return makeProductSlideshow(p);
         }).join('') + '</div>';
       } else {
-        panel.innerHTML = '<div class="photo-grid">' + prods.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
+        panel.innerHTML = '<div class="photo-grid grid-4">' + prods.map(function(p,i){return makeCard(p,i);}).join('') + '</div>'
+          + '<div class="prod-modal-body" style="margin-top:24px">'
+          + '<div class="prod-modal-contact-text">შესაკვეთად დაგვიკავშირდით</div>'
+          + contactBtnsHTML.replace('<div class="prod-modal-contact-text">შესაკვეთად დაგვიკავშირდით</div>','')
+          + '</div>';
       }
     } else {
       panel.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#888;font-size:16px">ფოტოები მალე დაემატება ✨</div>';
