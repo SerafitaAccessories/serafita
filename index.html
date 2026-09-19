@@ -1140,52 +1140,54 @@ function resetProdSlideTimer() {
 // ── GALLERY ──
 let allProducts = {};
 
-async function loadSite() {
-  try {
-    const cats = await sbFetch('categories', '?select=*&order=sort_order');
-    const prods = await sbFetch('products', '?select=*&order=sort_order');
+// ── HARDCODED CATEGORIES (არ არის დამოკიდებული Supabase-ზე) ──
+const categories = [
+  { id: 'bags', name: 'ჩანთები', cover: 'bag1_cover.jpg' },
+  { id: 'kids_bags', name: 'საბავშვო ჩანთები', cover: '' },
+  { id: 'car_bags', name: 'მანქანის ჩანთები', cover: '' },
+  { id: 'keychains', name: 'ბრელოკები', cover: '' },
+  { id: 'sets', name: 'ნაკრები', cover: '' },
+  { id: 'wedding_bouquets', name: 'საქორწილო თაიგულები', cover: '' },
+  { id: 'accessories', name: 'აქსესუარები', cover: '' }
+];
 
-    cats.forEach(function(c) { catNamesMap[c.id] = c.name; });
-    cats.forEach(function(c) {
-      photosMap[c.id] = prods.filter(function(p){return p.cat===c.id;}).map(function(p){return p.img;});
+function loadSite() {
+  categories.forEach(function(c) { catNamesMap[c.id] = c.name; });
+
+  const placeholder = '<div style="background:#F0F4F8;display:flex;align-items:center;justify-content:center;min-height:180px;aspect-ratio:4/3"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#BFC8E6" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
+
+  document.getElementById('catCards').innerHTML = categories.map(function(c) {
+    const prods = productData[c.id] || [];
+    const count = prods.length;
+    const hasImg = c.cover && c.cover.length > 0;
+    return '<div class="cat-card" onclick="openCategory(\'' + c.id + '\')">'
+      + '<div class="cat-card-img">' + (hasImg ? '<img src="' + c.cover + '" alt="' + c.name + '">' : placeholder) + '</div>'
+      + '<div class="cat-card-body">'
+      + '<div><div class="cat-card-name">' + c.name + '</div>'
+      + '<div class="cat-card-count">' + (count > 0 ? count + ' ნამუშევარი' : 'ფოტო მალე') + '</div></div>'
+      + '<div class="cat-arrow">→</div>'
+      + '</div></div>';
+  }).join('');
+
+  const pv = document.getElementById('photosView');
+  pv.querySelectorAll('.cat-panel').forEach(function(p){p.remove();});
+
+  categories.forEach(function(c) {
+    const prods = (productData[c.id] || []).map(function(h){
+      return { cat: c.id, cover: h.cover, price: h.price, photos: h.photos, name: h.id };
     });
+    allProducts[c.id] = prods;
 
-    document.getElementById('catCards').innerHTML = cats.map(function(c) {
-      const hardcoded = productData[c.id] || [];
-      const fromDb = prods.filter(function(p){return p.cat===c.id;});
-      const count = hardcoded.length + fromDb.length;
-      const coverImg = hardcoded.length > 0 ? hardcoded[0].cover : (c.img || '');
-      return '<div class="cat-card" onclick="openCategory(\'' + c.id + '\')">'
-        + '<div class="cat-card-img">' + (coverImg ? '<img src="' + coverImg + '" alt="' + c.name + '">' : '') + '</div>'
-        + '<div class="cat-card-body">'
-        + '<div><div class="cat-card-name">' + c.name + '</div>'
-        + '<div class="cat-card-count">' + count + ' ნამუშევარი</div></div>'
-        + '<div class="cat-arrow">→</div>'
-        + '</div></div>';
-    }).join('');
-
-    const pv = document.getElementById('photosView');
-    pv.querySelectorAll('.cat-panel').forEach(function(p){p.remove();});
-
-    cats.forEach(function(c) {
-      const hardcoded = (productData[c.id] || []).map(function(h){
-        return { cat: c.id, cover: h.cover, price: h.price, photos: h.photos, name: h.id };
-      });
-      const fromDb = prods.filter(function(p){return p.cat===c.id;}).map(function(p){
-        return { cat: c.id, cover: p.img, price: p.price, photos: [p.img], name: p.name, description: p.description };
-      });
-      const all = hardcoded.concat(fromDb);
-      allProducts[c.id] = all;
-
-      const panel = document.createElement('div');
-      panel.className = 'cat-panel';
-      panel.id = 'panel-' + c.id;
-      panel.innerHTML = '<div class="photo-grid">' + all.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
-      pv.appendChild(panel);
-    });
-  } catch(e) {
-    console.error('Supabase error:', e);
-  }
+    const panel = document.createElement('div');
+    panel.className = 'cat-panel';
+    panel.id = 'panel-' + c.id;
+    if (prods.length > 0) {
+      panel.innerHTML = '<div class="photo-grid">' + prods.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
+    } else {
+      panel.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#888;font-size:16px">ფოტოები მალე დაემატება ✨</div>';
+    }
+    pv.appendChild(panel);
+  });
 }
 
 loadSite();
