@@ -348,7 +348,8 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
 .prod-contact-btn.tiktok { background: #010101; color: white; border-color: #010101; }
 .prod-contact-btn.tiktok:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
 .prod-contact-btn svg { width: 20px; height: 20px; fill: currentColor; }
-.product-showcase { max-width: 600px; margin: 0 auto 40px; background: var(--white); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--glass-border); box-shadow: var(--shadow-card); }
+.products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.product-showcase { background: var(--white); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--glass-border); box-shadow: var(--shadow-card); }
 
 
 
@@ -393,6 +394,7 @@ section { position: relative; z-index: 1; padding: 100px 60px; }
   .courses-section { padding: 60px 20px; }
   .courses-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .products-grid { grid-template-columns: 1fr; gap: 16px; }
   .prod-modal { max-width: 95vw; }
 }
 @media(max-width:480px) {
@@ -1063,7 +1065,8 @@ let catNamesMap = {};
 // ── PRODUCT DATA (hardcoded products with multiple photos) ──
 const productData = {
   bags: [
-    { id:'bag1', cover:'bag1_cover.jpg', price:135, photos:['bag1_1.jpg','bag1_2.jpg','bag1_3.jpg','bag1_4.jpg','bag1_5.jpg','bag1_6.jpg','bag1_7.jpg'] }
+    { id:'bag1', cover:'bag1_cover.jpg', price:135, photos:['bag1_1.jpg','bag1_2.jpg','bag1_3.jpg','bag1_4.jpg','bag1_5.jpg','bag1_6.jpg','bag1_7.jpg'] },
+    { id:'bag2', cover:'bag2_cover.jpg', price:135, photos:['bag2_1.jpg','bag2_2.jpg','bag2_3.jpg'] }
   ]
 };
 
@@ -1188,13 +1191,14 @@ function loadSite() {
     panel.className = 'cat-panel';
     panel.id = 'panel-' + c.id;
     if (prods.length > 0) {
-      panel.innerHTML = prods.map(function(p){
-        if (p.photos && p.photos.length > 1) {
+      var hasSlideshow = prods.some(function(p){ return p.photos && p.photos.length > 1; });
+      if (hasSlideshow) {
+        panel.innerHTML = '<div class="products-grid">' + prods.map(function(p){
           return makeProductSlideshow(p);
-        } else {
-          return '<div class="photo-grid">' + makeCard(p, 0) + '</div>';
-        }
-      }).join('');
+        }).join('') + '</div>';
+      } else {
+        panel.innerHTML = '<div class="photo-grid">' + prods.map(function(p,i){return makeCard(p,i);}).join('') + '</div>';
+      }
     } else {
       panel.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#888;font-size:16px">ფოტოები მალე დაემატება ✨</div>';
     }
